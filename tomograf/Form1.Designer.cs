@@ -35,6 +35,7 @@
             this.outputPicture = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.chooseButton = new System.Windows.Forms.Button();
+            this.computeButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.stepLabel = new System.Windows.Forms.Label();
@@ -124,6 +125,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.chooseButton);
+            this.flowLayoutPanel1.Controls.Add(this.computeButton);
             this.flowLayoutPanel1.Controls.Add(this.saveButton);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -134,21 +136,28 @@
             // 
             // chooseButton
             // 
-            this.chooseButton.AutoSize = true;
             this.chooseButton.Location = new System.Drawing.Point(3, 3);
             this.chooseButton.Name = "chooseButton";
-            this.chooseButton.Size = new System.Drawing.Size(106, 23);
+            this.chooseButton.Size = new System.Drawing.Size(120, 23);
             this.chooseButton.TabIndex = 0;
             this.chooseButton.Text = "Choose the picture";
             this.chooseButton.UseVisualStyleBackColor = true;
             this.chooseButton.Click += new System.EventHandler(this.chooseButton_Click);
             // 
+            // computeButton
+            // 
+            this.computeButton.Location = new System.Drawing.Point(3, 32);
+            this.computeButton.Name = "computeButton";
+            this.computeButton.Size = new System.Drawing.Size(120, 23);
+            this.computeButton.TabIndex = 2;
+            this.computeButton.Text = "Compute";
+            this.computeButton.UseVisualStyleBackColor = true;
+            // 
             // saveButton
             // 
-            this.saveButton.AutoSize = true;
-            this.saveButton.Location = new System.Drawing.Point(3, 32);
+            this.saveButton.Location = new System.Drawing.Point(3, 61);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(94, 23);
+            this.saveButton.Size = new System.Drawing.Size(120, 23);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save as DICOM";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -240,6 +249,7 @@
             this.stepTextBox.Name = "stepTextBox";
             this.stepTextBox.Size = new System.Drawing.Size(66, 20);
             this.stepTextBox.TabIndex = 6;
+            this.stepTextBox.TextChanged += new System.EventHandler(this.stepTextBox_TextChanged);
             // 
             // detectorCountTextBox
             // 
@@ -248,6 +258,7 @@
             this.detectorCountTextBox.Name = "detectorCountTextBox";
             this.detectorCountTextBox.Size = new System.Drawing.Size(66, 20);
             this.detectorCountTextBox.TabIndex = 7;
+            this.detectorCountTextBox.TextChanged += new System.EventHandler(this.detectorCountTextBox_TextChanged);
             // 
             // spreadTextBox
             // 
@@ -256,6 +267,7 @@
             this.spreadTextBox.Name = "spreadTextBox";
             this.spreadTextBox.Size = new System.Drawing.Size(66, 20);
             this.spreadTextBox.TabIndex = 8;
+            this.spreadTextBox.TextChanged += new System.EventHandler(this.spreadTextBox_TextChanged);
             // 
             // openFileDialog1
             // 
@@ -278,7 +290,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.outputSinogram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputPicture)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stepTrackBar)).EndInit();
@@ -309,6 +320,7 @@
         private System.Windows.Forms.TextBox detectorCountTextBox;
         private System.Windows.Forms.TextBox spreadTextBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button computeButton;
     }
 }
 
