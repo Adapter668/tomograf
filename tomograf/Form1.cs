@@ -12,16 +12,19 @@ namespace tomograf
 {
     public partial class Form1 : Form
     {
+        private Tomograf tomograf;
+
         public Form1()
         {
+            tomograf = new Tomograf();
             InitializeComponent();
         }
 
         private void chooseButton_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                inputPicture.Load(openFileDialog1.FileName);
+                inputPicture.Load(openFileDialog.FileName);
             }
         }
 
@@ -38,6 +41,37 @@ namespace tomograf
         private void spreadTrackBar_Scroll(object sender, EventArgs e)
         {
             spreadTextBox.Text = spreadTrackBar.Value.ToString();
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            stepTextBox.Enabled = false;
+            stepTrackBar.Enabled = false;
+            detectorCountTextBox.Enabled = false;
+            detectorCountTrackBar.Enabled = false;
+            spreadTextBox.Enabled = false;
+            spreadTrackBar.Enabled = false;
+            chooseButton.Enabled = false;
+            saveButton.Enabled = false;
+            startButton.Enabled = false;
+
+            tomograf.PicturetoSinogram();
+
+            stepTextBox.Enabled = true;
+            stepTrackBar.Enabled = true;
+            detectorCountTextBox.Enabled = true;
+            detectorCountTrackBar.Enabled = true;
+            spreadTextBox.Enabled = true;
+            spreadTrackBar.Enabled = true;
+            chooseButton.Enabled = true;
+            saveButton.Enabled = true;
+            startButton.Enabled = true;
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to exit?", "Tomograf", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                this.Close();
         }
     }
 }
