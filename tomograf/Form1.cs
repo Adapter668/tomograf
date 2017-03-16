@@ -55,7 +55,8 @@ namespace tomograf
             saveButton.Enabled = false;
             startButton.Enabled = false;
 
-            tomograf.PicturetoSinogram();
+            //nalezy uzupelnic r
+            tomograf.Analyze(5,float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
 
             stepTextBox.Enabled = true;
             stepTrackBar.Enabled = true;
