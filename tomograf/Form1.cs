@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,7 +57,8 @@ namespace tomograf
             startButton.Enabled = false;
 
             //nalezy uzupelnic r
-            tomograf.Analyze(5,float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
+            Bitmap inpic = MakeGrayscale(new Bitmap(inputPicture.Image));
+            tomograf.Analyze(inpic, 100, float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
 
             stepTextBox.Enabled = true;
             stepTrackBar.Enabled = true;
@@ -73,6 +75,25 @@ namespace tomograf
         {
             if (MessageBox.Show("Are you sure you want to exit?", "Tomograf", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 this.Close();
+        }
+
+
+        public static Bitmap MakeGrayscale(Bitmap c)
+        {
+            Bitmap d = new Bitmap(c.Width, c.Height);
+
+            for (int i = 0; i < c.Width; i++)
+            {
+                for (int x = 0; x < c.Height; x++)
+                {
+                    Color oc = c.GetPixel(i, x);
+                    int grayScale = (int)((oc.R * 0.3) + (oc.G * 0.59) + (oc.B * 0.11));
+                    Color nc = Color.FromArgb(oc.A, grayScale, grayScale, grayScale);
+                    d.SetPixel(i, x, nc);
+                    
+                }
+            }
+            return d;
         }
     }
 }

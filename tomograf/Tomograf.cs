@@ -10,29 +10,42 @@ namespace tomograf
 {
     class Tomograf
     {
-        private float r;
+        private int r;
         private float alfa;
         private float step;
         private float l;
         private int n;
-        private PointF emmiter;
+        private Point emmiter;
+        BresenhamLine line;
+        Bitmap inpic;
+        Bitmap outpic;
+        Bitmap sinogram;
 
-        public void Analyze(float r, float step, float l, int n)
+        public void Analyze(Bitmap inpic, int r, float step, float l, int n)
         {
             this.r = r;
             this.alfa = 0;
             this.step = step;
             this.l = l;
             this.n = n;
+            this.inpic = inpic;
+            outpic = new Bitmap(inpic.Width, inpic.Height);
+            sinogram = new Bitmap(Convert.ToInt32(Math.Ceiling(360/l)),n);
 
             PicturetoSinogram();
-
         }
 
         //Converts input picture into sinogram
         private void PicturetoSinogram()
         {
             //todo
+            line = new BresenhamLine();
+
+            SetEmmiterPoint();
+
+            line.GenerateLine(emmiter, GetDetectorPoint(0));
+            Point b = GetDetectorPoint(0);
+            Point a = line.line[0];
         }
 
         //Converts sinogram into output picture
@@ -46,14 +59,6 @@ namespace tomograf
             //todo
         }
 
-        //gets next value of line between emmiter and detector
-        private PointF GetNextPoint(PointF prew)
-        {
-            //todo - algorytm Bresenhama
-            PointF next = new PointF(0,0);
-            return next;
-        }
-
         //set alfa to the next value
         private void NextAlfa()
         {
@@ -64,16 +69,16 @@ namespace tomograf
         //Moves emmiter to the next point
         private void SetEmmiterPoint()
         {
-            emmiter = new PointF(Convert.ToSingle(Math.Cos(alfa)), Convert.ToSingle(Math.Sin(alfa)));
+            emmiter = new Point(Convert.ToInt32(r * Math.Cos(alfa) + r), Convert.ToInt32(r * Math.Sin(alfa)) + r);
         }
 
         //Gets point of i detector
-        private PointF GetDetectorPoint(int i)
+        private Point GetDetectorPoint(int i)
         {
-            float xD, yD;
-            xD = Convert.ToSingle(r * Math.Cos(alfa + Math.PI - l / 2 + i * l / (n - 1)));
-            yD = Convert.ToSingle(r * Math.Sin(alfa + Math.PI - l / 2 + i * l / (n - 1)));
-            return new PointF(xD, yD);
+            int xD, yD;
+            xD = Convert.ToInt32(r * Math.Cos(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
+            yD = Convert.ToInt32(r * Math.Sin(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
+            return new Point(xD, yD);
         }
     }
 }
