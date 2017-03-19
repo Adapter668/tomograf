@@ -27,6 +27,7 @@ namespace tomograf
 
         public void GenerateLine(Point em, Point rec)
         {
+            line.Clear();
             //d - zmienna decydujaca o kierunku, dx,dy - odleglosc miedzy emiterem, a receptorem
             int d, dx, dy;
             //zmiana d po poruszeniu sie w danym kierunku

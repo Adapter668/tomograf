@@ -49,6 +49,7 @@
             this.detectorCountTextBox = new System.Windows.Forms.TextBox();
             this.spreadTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.Bright = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputSinogram)).BeginInit();
@@ -197,6 +198,7 @@
             this.flowLayoutPanel2.Controls.Add(this.stepTextBox);
             this.flowLayoutPanel2.Controls.Add(this.detectorCountTextBox);
             this.flowLayoutPanel2.Controls.Add(this.spreadTextBox);
+            this.flowLayoutPanel2.Controls.Add(this.Bright);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(344, 346);
@@ -256,19 +258,19 @@
             this.detectorCountTrackBar.Size = new System.Drawing.Size(696, 56);
             this.detectorCountTrackBar.TabIndex = 4;
             this.detectorCountTrackBar.TickFrequency = 20;
-            this.detectorCountTrackBar.Value = 10;
+            this.detectorCountTrackBar.Value = 30;
             this.detectorCountTrackBar.Scroll += new System.EventHandler(this.detectorCountTrackBar_Scroll);
             // 
             // spreadTrackBar
             // 
             this.spreadTrackBar.Location = new System.Drawing.Point(182, 143);
             this.spreadTrackBar.Margin = new System.Windows.Forms.Padding(4);
-            this.spreadTrackBar.Maximum = 120;
+            this.spreadTrackBar.Maximum = 200;
             this.spreadTrackBar.Name = "spreadTrackBar";
             this.spreadTrackBar.Size = new System.Drawing.Size(696, 56);
             this.spreadTrackBar.TabIndex = 5;
             this.spreadTrackBar.TickFrequency = 5;
-            this.spreadTrackBar.Value = 20;
+            this.spreadTrackBar.Value = 120;
             this.spreadTrackBar.Scroll += new System.EventHandler(this.spreadTrackBar_Scroll);
             // 
             // stepTextBox
@@ -287,7 +289,7 @@
             this.detectorCountTextBox.Name = "detectorCountTextBox";
             this.detectorCountTextBox.Size = new System.Drawing.Size(87, 22);
             this.detectorCountTextBox.TabIndex = 7;
-            this.detectorCountTextBox.Text = "10";
+            this.detectorCountTextBox.Text = "100";
             // 
             // spreadTextBox
             // 
@@ -296,13 +298,21 @@
             this.spreadTextBox.Name = "spreadTextBox";
             this.spreadTextBox.Size = new System.Drawing.Size(87, 22);
             this.spreadTextBox.TabIndex = 8;
-            this.spreadTextBox.Text = "20";
+            this.spreadTextBox.Text = "250";
             // 
             // openFileDialog
             // 
             this.openFileDialog.Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All file" +
     "s (*.*)|*.*  ";
             this.openFileDialog.Title = "Choose the picture";
+            // 
+            // Bright
+            // 
+            this.Bright.Location = new System.Drawing.Point(885, 169);
+            this.Bright.Name = "Bright";
+            this.Bright.Size = new System.Drawing.Size(100, 22);
+            this.Bright.TabIndex = 9;
+            this.Bright.Text = "1,3";
             // 
             // Form1
             // 
@@ -352,6 +362,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.TextBox Bright;
     }
 }
 

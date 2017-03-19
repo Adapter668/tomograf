@@ -17,15 +17,21 @@ namespace tomograf
 
         public Form1()
         {
-            tomograf = new Tomograf();
             InitializeComponent();
+            tomograf = new Tomograf(this.outputSinogram, this.outputPicture);
         }
 
         private void chooseButton_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                inputPicture.Load(openFileDialog.FileName);
+                Bitmap filepic = new Bitmap(openFileDialog.FileName);
+                int size = Math.Min(filepic.Width, filepic.Height);
+                Bitmap pic = new Bitmap(size, size);
+                Graphics g = Graphics.FromImage(pic);
+                g.DrawImage(filepic, new Rectangle(0,0,size,size));
+                g.Dispose();
+                inputPicture.Image = pic;
             }
         }
 
@@ -56,9 +62,9 @@ namespace tomograf
             saveButton.Enabled = false;
             startButton.Enabled = false;
 
-            //nalezy uzupelnic r
             Bitmap inpic = MakeGrayscale(new Bitmap(inputPicture.Image));
-            tomograf.Analyze(inpic, 100, float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
+
+            tomograf.Analyze(inpic, float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text), Convert.ToDouble(Bright.Text));
 
             stepTextBox.Enabled = true;
             stepTrackBar.Enabled = true;
