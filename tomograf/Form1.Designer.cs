@@ -49,7 +49,7 @@
             this.detectorCountTextBox = new System.Windows.Forms.TextBox();
             this.spreadTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.Bright = new System.Windows.Forms.TextBox();
+            this.NextPic = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputSinogram)).BeginInit();
@@ -135,6 +135,7 @@
             this.flowLayoutPanel1.Controls.Add(this.saveButton);
             this.flowLayoutPanel1.Controls.Add(this.startButton);
             this.flowLayoutPanel1.Controls.Add(this.exitButton);
+            this.flowLayoutPanel1.Controls.Add(this.NextPic);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 346);
@@ -198,7 +199,6 @@
             this.flowLayoutPanel2.Controls.Add(this.stepTextBox);
             this.flowLayoutPanel2.Controls.Add(this.detectorCountTextBox);
             this.flowLayoutPanel2.Controls.Add(this.spreadTextBox);
-            this.flowLayoutPanel2.Controls.Add(this.Bright);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(344, 346);
@@ -241,12 +241,13 @@
             // 
             this.stepTrackBar.Location = new System.Drawing.Point(182, 15);
             this.stepTrackBar.Margin = new System.Windows.Forms.Padding(4, 15, 4, 4);
-            this.stepTrackBar.Maximum = 90;
+            this.stepTrackBar.Maximum = 2000;
+            this.stepTrackBar.Minimum = 20;
             this.stepTrackBar.Name = "stepTrackBar";
             this.stepTrackBar.Size = new System.Drawing.Size(696, 56);
             this.stepTrackBar.TabIndex = 3;
             this.stepTrackBar.TickFrequency = 5;
-            this.stepTrackBar.Value = 5;
+            this.stepTrackBar.Value = 360;
             this.stepTrackBar.Scroll += new System.EventHandler(this.stepTrackBar_Scroll);
             // 
             // detectorCountTrackBar
@@ -254,6 +255,7 @@
             this.detectorCountTrackBar.Location = new System.Drawing.Point(182, 79);
             this.detectorCountTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.detectorCountTrackBar.Maximum = 480;
+            this.detectorCountTrackBar.Minimum = 1;
             this.detectorCountTrackBar.Name = "detectorCountTrackBar";
             this.detectorCountTrackBar.Size = new System.Drawing.Size(696, 56);
             this.detectorCountTrackBar.TabIndex = 4;
@@ -280,7 +282,7 @@
             this.stepTextBox.Name = "stepTextBox";
             this.stepTextBox.Size = new System.Drawing.Size(87, 22);
             this.stepTextBox.TabIndex = 6;
-            this.stepTextBox.Text = "5";
+            this.stepTextBox.Text = "360";
             // 
             // detectorCountTextBox
             // 
@@ -306,13 +308,15 @@
     "s (*.*)|*.*  ";
             this.openFileDialog.Title = "Choose the picture";
             // 
-            // Bright
+            // NextPic
             // 
-            this.Bright.Location = new System.Drawing.Point(885, 169);
-            this.Bright.Name = "Bright";
-            this.Bright.Size = new System.Drawing.Size(100, 22);
-            this.Bright.TabIndex = 9;
-            this.Bright.Text = "1,3";
+            this.NextPic.Location = new System.Drawing.Point(3, 163);
+            this.NextPic.Name = "NextPic";
+            this.NextPic.Size = new System.Drawing.Size(183, 36);
+            this.NextPic.TabIndex = 4;
+            this.NextPic.Text = "Next picture";
+            this.NextPic.UseVisualStyleBackColor = true;
+            this.NextPic.Click += new System.EventHandler(this.NextPic_Click);
             // 
             // Form1
             // 
@@ -362,7 +366,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button exitButton;
-        private System.Windows.Forms.TextBox Bright;
+        private System.Windows.Forms.Button NextPic;
     }
 }
 

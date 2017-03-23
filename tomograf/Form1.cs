@@ -62,9 +62,20 @@ namespace tomograf
             saveButton.Enabled = false;
             startButton.Enabled = false;
 
-            Bitmap inpic = MakeGrayscale(new Bitmap(inputPicture.Image));
+            int[,] inpic = BitmapToGrayscale(new Bitmap(inputPicture.Image));
 
-            tomograf.Analyze(inpic, float.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text), Convert.ToDouble(Bright.Text));
+            inputPicture.Image = GrayscaleToBitmap(inpic);
+
+            tomograf.SetSettings(inpic, int.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
+            
+            tomograf.PicturetoSinogram();
+            this.inputSinogram.Image = GrayscaleToBitmap(tomograf.sinogram);
+
+            tomograf.SinogramFilter();
+            this.outputSinogram.Image = GrayscaleToBitmap(tomograf.filtredsinogram);
+
+            tomograf.SinogramtoPicture();
+            this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[0]);
 
             stepTextBox.Enabled = true;
             stepTrackBar.Enabled = true;
@@ -84,22 +95,45 @@ namespace tomograf
         }
 
 
-        public static Bitmap MakeGrayscale(Bitmap c)
+        public static int[,] BitmapToGrayscale(Bitmap c)
         {
-            Bitmap d = new Bitmap(c.Width, c.Height);
+            int[,] d = new int[c.Width, c.Height];
 
             for (int i = 0; i < c.Width; i++)
             {
-                for (int x = 0; x < c.Height; x++)
+                for (int j = 0; j < c.Height; j++)
                 {
-                    Color oc = c.GetPixel(i, x);
+                    Color oc = c.GetPixel(i, j);
                     int grayScale = (int)((oc.R * 0.3) + (oc.G * 0.59) + (oc.B * 0.11));
-                    Color nc = Color.FromArgb(oc.A, grayScale, grayScale, grayScale);
-                    d.SetPixel(i, x, nc);
-                    
+                    d[i, j] = grayScale;
                 }
             }
             return d;
+        }
+
+        public static Bitmap GrayscaleToBitmap(int[,] arr)
+        {
+            Bitmap bit = new Bitmap(arr.GetLength(0), arr.GetLength(1));
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    bit.SetPixel(i, j, Color.FromArgb(arr[i, j], arr[i, j], arr[i, j]));
+                }
+            }
+            return bit;
+        }
+
+        private int pic = 0;
+        private void NextPic_Click(object sender, EventArgs e)
+        {
+            pic++;
+            if (pic >= tomograf.outpics.Count)
+            {
+                pic = 0;
+            }
+            this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[pic]);
         }
     }
 }
