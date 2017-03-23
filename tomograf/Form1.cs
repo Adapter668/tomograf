@@ -75,7 +75,7 @@ namespace tomograf
             this.outputSinogram.Image = GrayscaleToBitmap(tomograf.filtredsinogram);
 
             tomograf.SinogramtoPicture();
-            this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[0]);
+            this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[tomograf.outpics.Count - 1]);
 
             stepTextBox.Enabled = true;
             stepTrackBar.Enabled = true;
