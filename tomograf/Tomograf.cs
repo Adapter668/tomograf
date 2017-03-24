@@ -18,12 +18,14 @@ namespace tomograf
         private int n;
         private Point emmiter;
         private BresenhamLine line;
-        private Bitmap inpic;
-        private Bitmap outpic;
-        private Bitmap sinogram;
+
+        public int[,] inpic { get; private set; }
+        public int[,] sinogram { get; private set; }
+        public int[,] filtredsinogram { get; private set; }
+        public List<int[,]> outpics { get; private set; }
+
         private PictureBox sinogramPicture;
         private PictureBox outputPicture;
-        private double bright;
 
         public Tomograf(PictureBox sinogramPicture, PictureBox outputPicture)
         {
@@ -31,26 +33,22 @@ namespace tomograf
             this.outputPicture = outputPicture;
         }
 
-        public void Analyze(Bitmap inpic, float step, float l, int n, double bright)
+        public void SetSettings(int[,] inpic, int steps, float l, int n)
         {
-            this.bright = bright;
-            this.r = inpic.Width/2;
+            this.r = inpic.GetLength(0) / 2;
             this.alfa = 0;
-            this.step = DegreeToRadian(step);
+            this.step = DegreeToRadian(360.0/steps);
             this.l = DegreeToRadian(l);
             this.n = n;
+
             this.inpic = inpic;
-            outpic = new Bitmap(inpic.Width, inpic.Height);
-            ResetBitmap(outpic);
-
-            sinogram = new Bitmap(Convert.ToInt32(Math.Ceiling(360/step) + 1),n);
-
-            PicturetoSinogram(inpic, sinogram);
-            SinogramtoPicture(sinogram, outpic);
+            this.sinogram = new int[n, steps + 1];
+            this.filtredsinogram = new int[n, steps + 1];
+            this.outpics = new List<int[,]>();
         }
 
         //Converts input picture into sinogram
-        private void PicturetoSinogram(Bitmap inpic, Bitmap sinogram)
+        public void PicturetoSinogram()
         {
             line = new BresenhamLine();
 
@@ -62,40 +60,37 @@ namespace tomograf
                 SetEmmiterPoint();
                 for(int j = 0; j < n; j++)
                 {
-
-                    int sum = 0;
                     Point det = GetDetectorPoint(j);
                     line.GenerateLine(emmiter, det);
                     foreach(Point pt in line.line)
                     {
-                        int color = inpic.GetPixel(pt.X, pt.Y).R;
-                        sum += color;
+                        int color = inpic[pt.X, pt.Y];
+                        sinogram[j, i] += color;
                     }
-                    sum = Math.Min(Convert.ToInt32(sum / line.line.Count * bright),255);
-                    sinogram.SetPixel(i, j, Color.FromArgb(sum,sum,sum));
-                    this.sinogramPicture.Image = sinogram;
-                    this.sinogramPicture.Refresh();
+                    sinogram[j, i] /= line.line.Count;
                 }
                 NextAlfa();
                 i++;
             }
+            
+            int max = sinogram.Cast<int>().ToList().Max();
+            for (int k = 0; k < sinogram.GetLength(0); k++)
+                for (int l = 0; l < sinogram.GetLength(1); l++)
+                    sinogram[k,l] = Convert.ToInt32(sinogram[k,l] * 1.0 / max * 255);
         }
 
-        private void ResetBitmap(Bitmap a)
+        private void ResetArr(int[,] a)
         {
-            for (int i = 0; i < a.Width; i++)
-            {
-                for (int j = 0; j < a.Height; j++)
-                {
-                    a.SetPixel(i, j, Color.FromArgb(0, 0, 0));
-                }
-            }
+            for (int i = 0; i < a.GetLength(0); i++)
+                for (int j = 0; j < a.GetLength(1); j++)
+                    a[i, j] = 127;
         }
 
         //Converts sinogram into output picture
-        private void SinogramtoPicture(Bitmap sinogram, Bitmap outpic)
+        public void SinogramtoPicture()
         {
-            ResetBitmap(outpic);
+            int[,] outpic = new int[inpic.GetLength(0), inpic.GetLength(1)];
+            ResetArr(outpic);
 
             line = new BresenhamLine();
 
@@ -104,36 +99,91 @@ namespace tomograf
             int i = 0;
             while (alfa < 2 * Math.PI)
             {
+                if(i%5 == 0)
+                {
+                    outpics.Add((int[,]) outpic.Clone());
+                }
+
                 SetEmmiterPoint();
                 for (int j = 0; j < n; j++)
                 {
-                    int sum = sinogram.GetPixel(i,j).R;
+                    int sum = filtredsinogram[j, i];
                     
                     Point det = GetDetectorPoint(j);
                     line.GenerateLine(emmiter, det);
                     line.line.Reverse();
+
+                    int val = 0;
                     foreach (Point pt in line.line)
                     {
-                        int val = (sum + outpic.GetPixel(pt.X, pt.Y).R)/2;
-                        outpic.SetPixel(pt.X, pt.Y, Color.FromArgb(val, val, val));
+                        val += outpic[pt.X, pt.Y];
+                    }
+                    val /= line.line.Count;
+
+                    foreach (Point pt in line.line)
+                    {
+                        int pix = outpic[pt.X, pt.Y];
+                        int diff = 2;
+                        if(sum > val)
+                        {
+                            pix += diff;
+                            if (pix > 255)
+                                pix = 255;
+                        }
+                        else
+                        {
+                            pix -= diff;
+                            if (pix < 0)
+                                pix = 0;
+                        }
+                        outpic[pt.X, pt.Y] = pix;
                     }
                 }
-                this.outputPicture.Image = outpic;
-                this.outputPicture.Refresh();
                 NextAlfa();
                 i++;
             }
+            outpics.Add((int[,])outpic.Clone());
         }
 
-        private void Filter()
+        public void SinogramFilter()
         {
-            //todo
+            double[] h = new double[sinogram.GetLength(0)];
+            h[0] = 1;
+            for (int i = 1; i < sinogram.GetLength(0); i++)
+            {
+                if(i%2 != 0)
+                {
+                    h[i] = -4 / (Math.PI * Math.PI) / (i*i);
+                }
+                else
+                {
+                    h[i] = 0;
+                }
+            }
+
+            double[,] arr = new double[sinogram.GetLength(0), sinogram.GetLength(1)];
+
+            for (int i = 0; i < sinogram.GetLength(1); i++)
+                for (int j = 0; j < sinogram.GetLength(0); j++)
+                    for (int k = 0; k < sinogram.GetLength(0); k++)
+                        arr[j, i] += sinogram[k, i] * h[Math.Abs(j - k)];
+
+            double max = arr.Cast<double>().ToList().Max();
+            if(max == 0)
+                max = 1;
+
+            double min = arr.Cast<double>().ToList().Min();
+            
+            for (int i = 0; i < filtredsinogram.GetLength(0); i++)
+                for (int j = 0; j < filtredsinogram.GetLength(1); j++)
+                    filtredsinogram[i, j] = Convert.ToInt32((arr[i, j] - min)/(max - min) * 255);
+            
+            //filtredsinogram = sinogram;
         }
 
         //set alfa to the next value
         private void NextAlfa()
         {
-            //czy to starczy?
             alfa += step;
         }
 
@@ -157,19 +207,36 @@ namespace tomograf
         //Gets point of i detector
         private Point GetDetectorPoint(int i)
         {
-            //inne wzory przy n=1!!!
             int xD, yD;
-            xD = Convert.ToInt32(r * Math.Cos(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
-            if(xD < 0)
-                xD = 0;
-            if (xD >= 2 * r)
-                xD = 2 * r - 1;
-            yD = Convert.ToInt32(r * Math.Sin(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
-            if (yD < 0)
-                yD = 0;
-            if (yD >= 2 * r)
-                yD = 2 * r - 1;
-            return new Point(xD, yD);
+
+            if (n > 1)
+            {
+                xD = Convert.ToInt32(r * Math.Cos(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
+                if (xD < 0)
+                    xD = 0;
+                if (xD >= 2 * r)
+                    xD = 2 * r - 1;
+                yD = Convert.ToInt32(r * Math.Sin(alfa + Math.PI - l / 2 + i * l / (n - 1)) + r);
+                if (yD < 0)
+                    yD = 0;
+                if (yD >= 2 * r)
+                    yD = 2 * r - 1;
+                return new Point(xD, yD);
+            }
+            else
+            {
+                xD = Convert.ToInt32(r * Math.Cos(alfa + Math.PI) + r);
+                if (xD < 0)
+                    xD = 0;
+                if (xD >= 2 * r)
+                    xD = 2 * r - 1;
+                yD = Convert.ToInt32(r * Math.Sin(alfa + Math.PI) + r);
+                if (yD < 0)
+                    yD = 0;
+                if (yD >= 2 * r)
+                    yD = 2 * r - 1;
+                return new Point(xD, yD);
+            }
         }
 
         private double DegreeToRadian(double angle)
