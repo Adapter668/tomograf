@@ -101,11 +101,5 @@ namespace tomograf
             }
             return d;
         }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            SaveForm saveForm = new SaveForm();
-            saveForm.Show();
-        }
     }
 }
