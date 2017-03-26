@@ -38,6 +38,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.NextPic = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.stepLabel = new System.Windows.Forms.Label();
             this.detectorCountLabel = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@
             this.detectorCountTextBox = new System.Windows.Forms.TextBox();
             this.spreadTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.NextPic = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputSinogram)).BeginInit();
@@ -163,7 +163,7 @@
             // startButton
             // 
             this.startButton.Location = new System.Drawing.Point(2, 68);
-            this.startButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.startButton.Margin = new System.Windows.Forms.Padding(2);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(137, 27);
             this.startButton.TabIndex = 2;
@@ -174,13 +174,23 @@
             // exitButton
             // 
             this.exitButton.Location = new System.Drawing.Point(2, 99);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(137, 27);
             this.exitButton.TabIndex = 3;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // NextPic
+            // 
+            this.NextPic.Location = new System.Drawing.Point(3, 131);
+            this.NextPic.Name = "NextPic";
+            this.NextPic.Size = new System.Drawing.Size(183, 36);
+            this.NextPic.TabIndex = 4;
+            this.NextPic.Text = "Next picture";
+            this.NextPic.UseVisualStyleBackColor = true;
+            this.NextPic.Click += new System.EventHandler(this.NextPic_Click);
             // 
             // flowLayoutPanel2
             // 
@@ -233,7 +243,7 @@
             // 
             // stepTrackBar
             // 
-            this.stepTrackBar.Location = new System.Drawing.Point(182, 15);
+            this.stepTrackBar.Location = new System.Drawing.Point(138, 15);
             this.stepTrackBar.Margin = new System.Windows.Forms.Padding(4, 15, 4, 4);
             this.stepTrackBar.Maximum = 2000;
             this.stepTrackBar.Minimum = 20;
@@ -246,7 +256,7 @@
             // 
             // detectorCountTrackBar
             // 
-            this.detectorCountTrackBar.Location = new System.Drawing.Point(137, 63);
+            this.detectorCountTrackBar.Location = new System.Drawing.Point(137, 67);
             this.detectorCountTrackBar.Maximum = 480;
             this.detectorCountTrackBar.Minimum = 1;
             this.detectorCountTrackBar.Name = "detectorCountTrackBar";
@@ -258,8 +268,8 @@
             // 
             // spreadTrackBar
             // 
-            this.spreadTrackBar.Location = new System.Drawing.Point(137, 114);
-            this.spreadTrackBar.Maximum = 200;
+            this.spreadTrackBar.Location = new System.Drawing.Point(137, 118);
+            this.spreadTrackBar.Maximum = 250;
             this.spreadTrackBar.Name = "spreadTrackBar";
             this.spreadTrackBar.Size = new System.Drawing.Size(522, 45);
             this.spreadTrackBar.TabIndex = 5;
@@ -269,55 +279,39 @@
             // 
             // stepTextBox
             // 
-            this.stepTextBox.Location = new System.Drawing.Point(665, 16);
+            this.stepTextBox.Location = new System.Drawing.Point(667, 16);
             this.stepTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 15);
             this.stepTextBox.Name = "stepTextBox";
             this.stepTextBox.Size = new System.Drawing.Size(66, 20);
             this.stepTextBox.TabIndex = 6;
             this.stepTextBox.Text = "360";
+            this.stepTextBox.TextChanged += new System.EventHandler(this.stepTextBox_TextChanged);
             // 
             // detectorCountTextBox
             // 
-            this.detectorCountTextBox.Location = new System.Drawing.Point(665, 67);
+            this.detectorCountTextBox.Location = new System.Drawing.Point(667, 67);
             this.detectorCountTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 15);
             this.detectorCountTextBox.Name = "detectorCountTextBox";
             this.detectorCountTextBox.Size = new System.Drawing.Size(66, 20);
             this.detectorCountTextBox.TabIndex = 7;
             this.detectorCountTextBox.Text = "100";
+            this.detectorCountTextBox.TextChanged += new System.EventHandler(this.detectorCountTextBox_TextChanged);
             // 
             // spreadTextBox
             // 
-            this.spreadTextBox.Location = new System.Drawing.Point(665, 118);
+            this.spreadTextBox.Location = new System.Drawing.Point(667, 118);
             this.spreadTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 3);
             this.spreadTextBox.Name = "spreadTextBox";
             this.spreadTextBox.Size = new System.Drawing.Size(66, 20);
             this.spreadTextBox.TabIndex = 8;
             this.spreadTextBox.Text = "250";
-            // 
-            // Bright
-            // 
-            this.Bright.Location = new System.Drawing.Point(664, 143);
-            this.Bright.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Bright.Name = "Bright";
-            this.Bright.Size = new System.Drawing.Size(76, 20);
-            this.Bright.TabIndex = 9;
-            this.Bright.Text = "1,3";
+            this.spreadTextBox.TextChanged += new System.EventHandler(this.spreadTextBox_TextChanged);
             // 
             // openFileDialog
             // 
             this.openFileDialog.Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All file" +
     "s (*.*)|*.*  ";
             this.openFileDialog.Title = "Choose the picture";
-            // 
-            // NextPic
-            // 
-            this.NextPic.Location = new System.Drawing.Point(3, 163);
-            this.NextPic.Name = "NextPic";
-            this.NextPic.Size = new System.Drawing.Size(183, 36);
-            this.NextPic.TabIndex = 4;
-            this.NextPic.Text = "Next picture";
-            this.NextPic.UseVisualStyleBackColor = true;
-            this.NextPic.Click += new System.EventHandler(this.NextPic_Click);
             // 
             // Form1
             // 

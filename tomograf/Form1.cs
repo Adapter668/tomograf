@@ -135,5 +135,38 @@ namespace tomograf
             }
             this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[pic]);
         }
+
+        private void stepTextBox_TextChanged(object sender, EventArgs e)
+        {
+            int temp = int.Parse(stepTextBox.Text);
+            if (stepTrackBar.Minimum < temp && stepTrackBar.Maximum > temp)
+            {
+                stepTrackBar.Value = temp;
+            }
+        }
+
+        private void detectorCountTextBox_TextChanged(object sender, EventArgs e)
+        {
+            int temp = int.Parse(detectorCountTextBox.Text);
+            if (detectorCountTrackBar.Minimum < temp && detectorCountTrackBar.Maximum > temp)
+            {
+                detectorCountTrackBar.Value = temp;
+            }
+        }
+
+        private void spreadTextBox_TextChanged(object sender, EventArgs e)
+        {
+            int temp = int.Parse(spreadTextBox.Text);
+            if (spreadTrackBar.Minimum < temp && spreadTrackBar.Maximum > temp)
+            {
+                spreadTrackBar.Value = temp;
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveForm saveForm = new SaveForm(new Bitmap(outputPicture.Image));
+            saveForm.Show();
+        }
     }
 }
