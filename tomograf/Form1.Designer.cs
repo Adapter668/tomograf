@@ -77,21 +77,19 @@
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1361, 571);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1021, 464);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // inputPicture
             // 
             this.inputPicture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inputPicture.Location = new System.Drawing.Point(4, 4);
-            this.inputPicture.Margin = new System.Windows.Forms.Padding(4);
+            this.inputPicture.Location = new System.Drawing.Point(3, 3);
             this.inputPicture.Name = "inputPicture";
-            this.inputPicture.Size = new System.Drawing.Size(332, 334);
+            this.inputPicture.Size = new System.Drawing.Size(249, 272);
             this.inputPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.inputPicture.TabIndex = 0;
             this.inputPicture.TabStop = false;
@@ -99,10 +97,9 @@
             // inputSinogram
             // 
             this.inputSinogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inputSinogram.Location = new System.Drawing.Point(344, 4);
-            this.inputSinogram.Margin = new System.Windows.Forms.Padding(4);
+            this.inputSinogram.Location = new System.Drawing.Point(258, 3);
             this.inputSinogram.Name = "inputSinogram";
-            this.inputSinogram.Size = new System.Drawing.Size(332, 334);
+            this.inputSinogram.Size = new System.Drawing.Size(249, 272);
             this.inputSinogram.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.inputSinogram.TabIndex = 1;
             this.inputSinogram.TabStop = false;
@@ -110,10 +107,9 @@
             // outputSinogram
             // 
             this.outputSinogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputSinogram.Location = new System.Drawing.Point(684, 4);
-            this.outputSinogram.Margin = new System.Windows.Forms.Padding(4);
+            this.outputSinogram.Location = new System.Drawing.Point(513, 3);
             this.outputSinogram.Name = "outputSinogram";
-            this.outputSinogram.Size = new System.Drawing.Size(332, 334);
+            this.outputSinogram.Size = new System.Drawing.Size(249, 272);
             this.outputSinogram.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.outputSinogram.TabIndex = 2;
             this.outputSinogram.TabStop = false;
@@ -121,10 +117,9 @@
             // outputPicture
             // 
             this.outputPicture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputPicture.Location = new System.Drawing.Point(1024, 4);
-            this.outputPicture.Margin = new System.Windows.Forms.Padding(4);
+            this.outputPicture.Location = new System.Drawing.Point(768, 3);
             this.outputPicture.Name = "outputPicture";
-            this.outputPicture.Size = new System.Drawing.Size(333, 334);
+            this.outputPicture.Size = new System.Drawing.Size(250, 272);
             this.outputPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.outputPicture.TabIndex = 3;
             this.outputPicture.TabStop = false;
@@ -138,19 +133,17 @@
             this.flowLayoutPanel1.Controls.Add(this.NextPic);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 346);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 281);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(332, 221);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(249, 180);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // chooseButton
             // 
             this.chooseButton.AutoSize = true;
-            this.chooseButton.Location = new System.Drawing.Point(4, 4);
-            this.chooseButton.Margin = new System.Windows.Forms.Padding(4);
+            this.chooseButton.Location = new System.Drawing.Point(3, 3);
             this.chooseButton.Name = "chooseButton";
-            this.chooseButton.Size = new System.Drawing.Size(183, 33);
+            this.chooseButton.Size = new System.Drawing.Size(137, 27);
             this.chooseButton.TabIndex = 0;
             this.chooseButton.Text = "Choose the picture";
             this.chooseButton.UseVisualStyleBackColor = true;
@@ -159,19 +152,20 @@
             // saveButton
             // 
             this.saveButton.AutoSize = true;
-            this.saveButton.Location = new System.Drawing.Point(4, 45);
-            this.saveButton.Margin = new System.Windows.Forms.Padding(4);
+            this.saveButton.Location = new System.Drawing.Point(3, 36);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(183, 33);
+            this.saveButton.Size = new System.Drawing.Size(137, 27);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save as DICOM";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(3, 85);
+            this.startButton.Location = new System.Drawing.Point(2, 68);
+            this.startButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(183, 33);
+            this.startButton.Size = new System.Drawing.Size(137, 27);
             this.startButton.TabIndex = 2;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -179,9 +173,10 @@
             // 
             // exitButton
             // 
-            this.exitButton.Location = new System.Drawing.Point(3, 124);
+            this.exitButton.Location = new System.Drawing.Point(2, 99);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(183, 33);
+            this.exitButton.Size = new System.Drawing.Size(137, 27);
             this.exitButton.TabIndex = 3;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
@@ -201,39 +196,38 @@
             this.flowLayoutPanel2.Controls.Add(this.spreadTextBox);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(344, 346);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(258, 281);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1013, 221);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(760, 180);
             this.flowLayoutPanel2.TabIndex = 5;
             // 
             // stepLabel
             // 
             this.stepLabel.AutoSize = true;
-            this.stepLabel.Location = new System.Drawing.Point(13, 22);
-            this.stepLabel.Margin = new System.Windows.Forms.Padding(13, 22, 4, 20);
+            this.stepLabel.Location = new System.Drawing.Point(10, 18);
+            this.stepLabel.Margin = new System.Windows.Forms.Padding(10, 18, 3, 16);
             this.stepLabel.Name = "stepLabel";
-            this.stepLabel.Size = new System.Drawing.Size(41, 17);
+            this.stepLabel.Size = new System.Drawing.Size(32, 13);
             this.stepLabel.TabIndex = 0;
             this.stepLabel.Text = "Step:";
             // 
             // detectorCountLabel
             // 
             this.detectorCountLabel.AutoSize = true;
-            this.detectorCountLabel.Location = new System.Drawing.Point(13, 84);
-            this.detectorCountLabel.Margin = new System.Windows.Forms.Padding(13, 25, 4, 20);
+            this.detectorCountLabel.Location = new System.Drawing.Point(10, 67);
+            this.detectorCountLabel.Margin = new System.Windows.Forms.Padding(10, 20, 3, 16);
             this.detectorCountLabel.Name = "detectorCountLabel";
-            this.detectorCountLabel.Size = new System.Drawing.Size(105, 17);
+            this.detectorCountLabel.Size = new System.Drawing.Size(81, 13);
             this.detectorCountLabel.TabIndex = 1;
             this.detectorCountLabel.Text = "Detector count:";
             // 
             // spreadLabel
             // 
             this.spreadLabel.AutoSize = true;
-            this.spreadLabel.Location = new System.Drawing.Point(13, 148);
-            this.spreadLabel.Margin = new System.Windows.Forms.Padding(13, 27, 4, 20);
+            this.spreadLabel.Location = new System.Drawing.Point(10, 118);
+            this.spreadLabel.Margin = new System.Windows.Forms.Padding(10, 22, 3, 16);
             this.spreadLabel.Name = "spreadLabel";
-            this.spreadLabel.Size = new System.Drawing.Size(161, 17);
+            this.spreadLabel.Size = new System.Drawing.Size(121, 13);
             this.spreadLabel.TabIndex = 2;
             this.spreadLabel.Text = "Spread of the detectors:";
             // 
@@ -244,7 +238,7 @@
             this.stepTrackBar.Maximum = 2000;
             this.stepTrackBar.Minimum = 20;
             this.stepTrackBar.Name = "stepTrackBar";
-            this.stepTrackBar.Size = new System.Drawing.Size(696, 56);
+            this.stepTrackBar.Size = new System.Drawing.Size(522, 45);
             this.stepTrackBar.TabIndex = 3;
             this.stepTrackBar.TickFrequency = 5;
             this.stepTrackBar.Value = 360;
@@ -252,12 +246,11 @@
             // 
             // detectorCountTrackBar
             // 
-            this.detectorCountTrackBar.Location = new System.Drawing.Point(182, 79);
-            this.detectorCountTrackBar.Margin = new System.Windows.Forms.Padding(4);
+            this.detectorCountTrackBar.Location = new System.Drawing.Point(137, 63);
             this.detectorCountTrackBar.Maximum = 480;
             this.detectorCountTrackBar.Minimum = 1;
             this.detectorCountTrackBar.Name = "detectorCountTrackBar";
-            this.detectorCountTrackBar.Size = new System.Drawing.Size(696, 56);
+            this.detectorCountTrackBar.Size = new System.Drawing.Size(522, 45);
             this.detectorCountTrackBar.TabIndex = 4;
             this.detectorCountTrackBar.TickFrequency = 20;
             this.detectorCountTrackBar.Value = 30;
@@ -265,11 +258,10 @@
             // 
             // spreadTrackBar
             // 
-            this.spreadTrackBar.Location = new System.Drawing.Point(182, 143);
-            this.spreadTrackBar.Margin = new System.Windows.Forms.Padding(4);
+            this.spreadTrackBar.Location = new System.Drawing.Point(137, 114);
             this.spreadTrackBar.Maximum = 200;
             this.spreadTrackBar.Name = "spreadTrackBar";
-            this.spreadTrackBar.Size = new System.Drawing.Size(696, 56);
+            this.spreadTrackBar.Size = new System.Drawing.Size(522, 45);
             this.spreadTrackBar.TabIndex = 5;
             this.spreadTrackBar.TickFrequency = 5;
             this.spreadTrackBar.Value = 120;
@@ -277,30 +269,39 @@
             // 
             // stepTextBox
             // 
-            this.stepTextBox.Location = new System.Drawing.Point(886, 20);
-            this.stepTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 18);
+            this.stepTextBox.Location = new System.Drawing.Point(665, 16);
+            this.stepTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 15);
             this.stepTextBox.Name = "stepTextBox";
-            this.stepTextBox.Size = new System.Drawing.Size(87, 22);
+            this.stepTextBox.Size = new System.Drawing.Size(66, 20);
             this.stepTextBox.TabIndex = 6;
             this.stepTextBox.Text = "360";
             // 
             // detectorCountTextBox
             // 
-            this.detectorCountTextBox.Location = new System.Drawing.Point(886, 80);
-            this.detectorCountTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 18);
+            this.detectorCountTextBox.Location = new System.Drawing.Point(665, 67);
+            this.detectorCountTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 15);
             this.detectorCountTextBox.Name = "detectorCountTextBox";
-            this.detectorCountTextBox.Size = new System.Drawing.Size(87, 22);
+            this.detectorCountTextBox.Size = new System.Drawing.Size(66, 20);
             this.detectorCountTextBox.TabIndex = 7;
             this.detectorCountTextBox.Text = "100";
             // 
             // spreadTextBox
             // 
-            this.spreadTextBox.Location = new System.Drawing.Point(886, 140);
-            this.spreadTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 4);
+            this.spreadTextBox.Location = new System.Drawing.Point(665, 118);
+            this.spreadTextBox.Margin = new System.Windows.Forms.Padding(3, 16, 3, 3);
             this.spreadTextBox.Name = "spreadTextBox";
-            this.spreadTextBox.Size = new System.Drawing.Size(87, 22);
+            this.spreadTextBox.Size = new System.Drawing.Size(66, 20);
             this.spreadTextBox.TabIndex = 8;
             this.spreadTextBox.Text = "250";
+            // 
+            // Bright
+            // 
+            this.Bright.Location = new System.Drawing.Point(664, 143);
+            this.Bright.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Bright.Name = "Bright";
+            this.Bright.Size = new System.Drawing.Size(76, 20);
+            this.Bright.TabIndex = 9;
+            this.Bright.Text = "1,3";
             // 
             // openFileDialog
             // 
@@ -320,11 +321,10 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1361, 571);
+            this.ClientSize = new System.Drawing.Size(1021, 464);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Tomograf";
             this.tableLayoutPanel1.ResumeLayout(false);
