@@ -83,7 +83,7 @@ namespace tomograf
         {
             for (int i = 0; i < a.GetLength(0); i++)
                 for (int j = 0; j < a.GetLength(1); j++)
-                    a[i, j] = 127;
+                    a[i, j] = 125;
         }
 
         //Converts sinogram into output picture
@@ -145,40 +145,45 @@ namespace tomograf
             outpics.Add((int[,])outpic.Clone());
         }
 
-        public void SinogramFilter()
+        public void SinogramFilter(bool filteron)
         {
-            double[] h = new double[sinogram.GetLength(0)];
-            h[0] = 1;
-            for (int i = 1; i < sinogram.GetLength(0); i++)
+            if (filteron)
             {
-                if(i%2 != 0)
+                double[] h = new double[sinogram.GetLength(0)];
+                h[0] = 1;
+                for (int i = 1; i < sinogram.GetLength(0); i++)
                 {
-                    h[i] = -4 / (Math.PI * Math.PI) / (i*i);
+                    if (i % 2 != 0)
+                    {
+                        h[i] = -4 / (Math.PI * Math.PI) / (i * i);
+                    }
+                    else
+                    {
+                        h[i] = 0;
+                    }
                 }
-                else
-                {
-                    h[i] = 0;
-                }
+
+                double[,] arr = new double[sinogram.GetLength(0), sinogram.GetLength(1)];
+
+                for (int i = 0; i < sinogram.GetLength(1); i++)
+                    for (int j = 0; j < sinogram.GetLength(0); j++)
+                        for (int k = 0; k < sinogram.GetLength(0); k++)
+                            arr[j, i] += sinogram[k, i] * h[Math.Abs(j - k)];
+
+                double max = arr.Cast<double>().ToList().Max();
+                if (max == 0)
+                    max = 1;
+
+                double min = arr.Cast<double>().ToList().Min();
+
+                for (int i = 0; i < filtredsinogram.GetLength(0); i++)
+                    for (int j = 0; j < filtredsinogram.GetLength(1); j++)
+                        filtredsinogram[i, j] = Convert.ToInt32((arr[i, j] - min) / (max - min) * (arr[i, j] - min) / (max - min) * 255);
             }
-
-            double[,] arr = new double[sinogram.GetLength(0), sinogram.GetLength(1)];
-
-            for (int i = 0; i < sinogram.GetLength(1); i++)
-                for (int j = 0; j < sinogram.GetLength(0); j++)
-                    for (int k = 0; k < sinogram.GetLength(0); k++)
-                        arr[j, i] += sinogram[k, i] * h[Math.Abs(j - k)];
-
-            double max = arr.Cast<double>().ToList().Max();
-            if(max == 0)
-                max = 1;
-
-            double min = arr.Cast<double>().ToList().Min();
-            
-            for (int i = 0; i < filtredsinogram.GetLength(0); i++)
-                for (int j = 0; j < filtredsinogram.GetLength(1); j++)
-                    filtredsinogram[i, j] = Convert.ToInt32((arr[i, j] - min)/(max - min) * 255);
-            
-            //filtredsinogram = sinogram;
+            else
+            {
+                filtredsinogram = sinogram;
+            }
         }
 
         //set alfa to the next value
