@@ -57,10 +57,16 @@ namespace tomograf
         {
             stepTextBox.Enabled = false;
             stepTrackBar.Enabled = false;
+            stepTextBox.Text = stepTrackBar.Value.ToString();
+
             detectorCountTextBox.Enabled = false;
             detectorCountTrackBar.Enabled = false;
+            detectorCountTextBox.Text = detectorCountTrackBar.Value.ToString();
+
             spreadTextBox.Enabled = false;
             spreadTrackBar.Enabled = false;
+            spreadTextBox.Text = spreadTrackBar.Value.ToString();
+
             chooseButton.Enabled = false;
             saveButton.Enabled = false;
             startButton.Enabled = false;
@@ -72,23 +78,49 @@ namespace tomograf
 
             pic = 0;
 
+            int[,] inpic = BitmapToGrayscale(new Bitmap(inputPicture.Image));
+
+            inputPicture.Image = GrayscaleToBitmap(inpic);
+            tomograf.SetSettings(inpic, stepTrackBar.Value, spreadTrackBar.Value, detectorCountTrackBar.Value);
+
             new Thread(() =>
             {
-                int[,] inpic = BitmapToGrayscale(new Bitmap(inputPicture.Image));
-
-                inputPicture.Image = GrayscaleToBitmap(inpic);
-
-                tomograf.SetSettings(inpic, int.Parse(stepTextBox.Text), float.Parse(spreadTextBox.Text), Int32.Parse(detectorCountTextBox.Text));
-
                 tomograf.PicturetoSinogram();
-                this.inputSinogram.Image = GrayscaleToBitmap(tomograf.sinogram);
+                setPicture(this.inputSinogram, GrayscaleToBitmap(tomograf.sinogram));
 
                 tomograf.SinogramFilter(filterOnRadioButton.Checked);
-                this.outputSinogram.Image = GrayscaleToBitmap(tomograf.filtredsinogram);
+                setPicture(this.outputSinogram, GrayscaleToBitmap(tomograf.filtredsinogram));
 
                 tomograf.SinogramtoPicture();
-                this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[tomograf.outpics.Count - 1]);
+                setPicture(this.outputPicture, GrayscaleToBitmap(tomograf.outpics[tomograf.outpics.Count - 1]));
+                Enable();
+            }).Start();
+        }
 
+        delegate void setPictureCallback(PictureBox picturebox, Bitmap bitmap);
+        public void setPicture(PictureBox picturebox, Bitmap bitmap)
+        {
+            if (picturebox.InvokeRequired)
+            {
+                setPictureCallback pictureCallback = new setPictureCallback(setPicture);
+                this.Invoke(pictureCallback, picturebox, bitmap);
+            }
+            else
+            {
+                picturebox.Image = bitmap;
+            }
+        }
+
+        delegate void enableCallback();
+        public void Enable()
+        {
+            if (stepTextBox.InvokeRequired)
+            {
+                enableCallback enable = new enableCallback(Enable);
+                this.Invoke(enable);
+            }
+            else
+            {
                 stepTextBox.Enabled = true;
                 stepTrackBar.Enabled = true;
                 detectorCountTextBox.Enabled = true;
@@ -102,7 +134,9 @@ namespace tomograf
                 pictureTrackBar.Maximum = tomograf.outpics.Count - 1;
                 pictureTrackBar.Value = tomograf.outpics.Count - 1;
                 pictureTrackBar.Enabled = true;
-            }).Start();
+
+                msErrorTextBox.Text = tomograf.meanSquaredError.ToString();
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -173,13 +207,13 @@ namespace tomograf
                     detectorCountTrackBar.Value = temp;
                 }
 
-                if (temp > spreadTrackBar.Maximum)
+                if (temp > detectorCountTrackBar.Maximum)
                 {
-                    MessageBox.Show("Maximum detector count is " + spreadTrackBar.Maximum.ToString() + ".",
+                    MessageBox.Show("Maximum detector count is " + detectorCountTrackBar.Maximum.ToString() + ".",
                         "Detector count Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                    detectorCountTextBox.Text = spreadTrackBar.Maximum.ToString();
+                    detectorCountTextBox.Text = detectorCountTrackBar.Maximum.ToString();
                 }
             }
         }
@@ -235,5 +269,7 @@ namespace tomograf
             TrackBar track = (TrackBar) sender;
             this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[track.Value]);
         }
+
+        
     }
 }

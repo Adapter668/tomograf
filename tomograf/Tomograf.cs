@@ -19,6 +19,8 @@ namespace tomograf
         private Point emmiter;
         private BresenhamLine line;
 
+        public long meanSquaredError{get; private set;}
+
         public int[,] inpic { get; private set; }
         public int[,] sinogram { get; private set; }
         public int[,] filtredsinogram { get; private set; }
@@ -83,7 +85,7 @@ namespace tomograf
         {
             for (int i = 0; i < a.GetLength(0); i++)
                 for (int j = 0; j < a.GetLength(1); j++)
-                    a[i, j] = 125;
+                    a[i, j] = 70;
         }
 
         //Converts sinogram into output picture
@@ -143,6 +145,7 @@ namespace tomograf
                 i++;
             }
             outpics.Add((int[,])outpic.Clone());
+            CountMeanSquaredError();
         }
 
         public void SinogramFilter(bool filteron)
@@ -247,6 +250,21 @@ namespace tomograf
         private double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
+        }
+
+        private void CountMeanSquaredError()
+        {
+            meanSquaredError = 0;
+            int n = outpics.Count - 1;
+            for (int i = 0; i < inpic.GetLength(0); i++)
+                for (int j = 0; j < inpic.GetLength(1); j++)
+                {
+                    if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r)
+                    {
+                        int a = inpic[i, j] - outpics[n][i, j];
+                        meanSquaredError += a * a;
+                    }
+                }
         }
     }
 }

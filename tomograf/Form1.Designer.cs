@@ -53,6 +53,7 @@
             this.pictureTrackBar = new System.Windows.Forms.TrackBar();
             this.filterOnRadioButton = new System.Windows.Forms.RadioButton();
             this.filterOffRadioButton = new System.Windows.Forms.RadioButton();
+            this.msErrorTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputSinogram)).BeginInit();
@@ -214,6 +215,7 @@
             this.flowLayoutPanel2.Controls.Add(this.stepTextBox);
             this.flowLayoutPanel2.Controls.Add(this.detectorCountTextBox);
             this.flowLayoutPanel2.Controls.Add(this.spreadTextBox);
+            this.flowLayoutPanel2.Controls.Add(this.msErrorTextBox);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(344, 335);
@@ -316,7 +318,7 @@
             // spreadTextBox
             // 
             this.spreadTextBox.Location = new System.Drawing.Point(888, 140);
-            this.spreadTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 4);
+            this.spreadTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 18);
             this.spreadTextBox.Name = "spreadTextBox";
             this.spreadTextBox.Size = new System.Drawing.Size(87, 22);
             this.spreadTextBox.TabIndex = 8;
@@ -325,7 +327,7 @@
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All file" +
+            this.openFileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg|BMP Files (*.bmp)|*.bmp|All file" +
     "s (*.*)|*.*  ";
             this.openFileDialog.Title = "Choose the picture";
             // 
@@ -372,6 +374,15 @@
             this.filterOffRadioButton.TabIndex = 5;
             this.filterOffRadioButton.Text = "Sinogram filter off";
             this.filterOffRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // msErrorTextBox
+            // 
+            this.msErrorTextBox.Location = new System.Drawing.Point(888, 200);
+            this.msErrorTextBox.Margin = new System.Windows.Forms.Padding(4, 20, 4, 18);
+            this.msErrorTextBox.Name = "msErrorTextBox";
+            this.msErrorTextBox.ReadOnly = true;
+            this.msErrorTextBox.Size = new System.Drawing.Size(116, 22);
+            this.msErrorTextBox.TabIndex = 11;
             // 
             // Form1
             // 
@@ -426,6 +437,7 @@
         private System.Windows.Forms.TrackBar pictureTrackBar;
         private System.Windows.Forms.RadioButton filterOnRadioButton;
         private System.Windows.Forms.RadioButton filterOffRadioButton;
+        private System.Windows.Forms.TextBox msErrorTextBox;
     }
 }
 
