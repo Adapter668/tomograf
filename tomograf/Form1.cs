@@ -193,6 +193,8 @@ namespace tomograf
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     stepTextBox.Text = stepTrackBar.Maximum.ToString();
+                    stepTrackBar.Value = stepTrackBar.Maximum;
+
                 }
             }
         }
@@ -214,6 +216,7 @@ namespace tomograf
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     detectorCountTextBox.Text = detectorCountTrackBar.Maximum.ToString();
+                    detectorCountTrackBar.Value = detectorCountTrackBar.Maximum;
                 }
             }
         }
@@ -235,6 +238,7 @@ namespace tomograf
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     spreadTextBox.Text = spreadTrackBar.Maximum.ToString();
+                    spreadTrackBar.Value = spreadTrackBar.Maximum;
                 }
             }
         }

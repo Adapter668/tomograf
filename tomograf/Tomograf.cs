@@ -85,7 +85,7 @@ namespace tomograf
         {
             for (int i = 0; i < a.GetLength(0); i++)
                 for (int j = 0; j < a.GetLength(1); j++)
-                    a[i, j] = 70;
+                    a[i, j] = 0;
         }
 
         //Converts sinogram into output picture
