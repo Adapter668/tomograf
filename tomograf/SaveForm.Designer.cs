@@ -199,6 +199,7 @@
             this.patientBirthDateTimePicker.Name = "patientBirthDateTimePicker";
             this.patientBirthDateTimePicker.Size = new System.Drawing.Size(169, 20);
             this.patientBirthDateTimePicker.TabIndex = 18;
+            this.patientBirthDateTimePicker.Value = new System.DateTime(2002, 9, 5, 0, 0, 0, 0);
             // 
             // studyDateTimePicker
             // 

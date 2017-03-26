@@ -145,7 +145,7 @@ namespace tomograf
             dataset.Add(DicomTag.NumberOfSeriesRelatedInstances, "1");
             dataset.Add(DicomTag.PatientOrientation, "F/A");
             dataset.Add(DicomTag.ImageLaterality, "U");
-            dataset.Add(DicomTag.StudyDescription, commentTextBox.Text);
+            dataset.Add(DicomTag.StudyDescription, commentTextBox.Text);            
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -158,13 +158,32 @@ namespace tomograf
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            string path = folderTextBox.Text + @"\" + nameTextBox.Text;
-            if (path.Substring(path.Length - 4, 4) != ".dcm")
+            if (String.IsNullOrEmpty(nameTextBox.Text))
             {
-                path += ".dcm";
+                MessageBox.Show("Please enter name of file.", "Name Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            ExportImage(bmp, path);
-            this.Close();
+            else if (String.IsNullOrEmpty(folderTextBox.Text))
+            {
+                MessageBox.Show("Please enter path to folder.", "Folder Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (String.IsNullOrEmpty(patientIDTextBox.Text))
+            {
+                MessageBox.Show("Please enter parient ID.", "Patient ID Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (String.IsNullOrEmpty(patientNameTextBox.Text))
+            {
+                MessageBox.Show("Please enter parient name.", "Patient Name Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                string path = folderTextBox.Text + @"\" + nameTextBox.Text;
+                if (path.Substring(path.Length - 4, 4) != ".dcm")
+                {
+                    path += ".dcm";
+                }
+                ExportImage(bmp, path);
+                this.Close();
+            }
         }
     }
 }
