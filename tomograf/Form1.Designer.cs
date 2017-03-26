@@ -263,7 +263,7 @@
             this.detectorCountTrackBar.Size = new System.Drawing.Size(522, 45);
             this.detectorCountTrackBar.TabIndex = 4;
             this.detectorCountTrackBar.TickFrequency = 20;
-            this.detectorCountTrackBar.Value = 30;
+            this.detectorCountTrackBar.Value = 100;
             this.detectorCountTrackBar.Scroll += new System.EventHandler(this.detectorCountTrackBar_Scroll);
             // 
             // spreadTrackBar
@@ -274,7 +274,7 @@
             this.spreadTrackBar.Size = new System.Drawing.Size(522, 45);
             this.spreadTrackBar.TabIndex = 5;
             this.spreadTrackBar.TickFrequency = 5;
-            this.spreadTrackBar.Value = 120;
+            this.spreadTrackBar.Value = 250;
             this.spreadTrackBar.Scroll += new System.EventHandler(this.spreadTrackBar_Scroll);
             // 
             // stepTextBox
