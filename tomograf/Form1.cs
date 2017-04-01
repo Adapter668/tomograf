@@ -20,7 +20,7 @@ namespace tomograf
         public Form1()
         {
             InitializeComponent();
-            tomograf = new Tomograf(this.outputSinogram, this.outputPicture);
+            tomograf = new Tomograf();
         }
 
         private void chooseButton_Click(object sender, EventArgs e)
@@ -273,7 +273,5 @@ namespace tomograf
             TrackBar track = (TrackBar) sender;
             this.outputPicture.Image = GrayscaleToBitmap(tomograf.outpics[track.Value]);
         }
-
-        
     }
 }

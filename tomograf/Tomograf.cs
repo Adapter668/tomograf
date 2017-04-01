@@ -19,21 +19,13 @@ namespace tomograf
         private Point emmiter;
         private BresenhamLine line;
 
-        public long meanSquaredError{get; private set;}
+        public double meanSquaredError{get; private set;}
 
         public int[,] inpic { get; private set; }
         public int[,] sinogram { get; private set; }
         public int[,] filtredsinogram { get; private set; }
         public List<int[,]> outpics { get; private set; }
 
-        private PictureBox sinogramPicture;
-        private PictureBox outputPicture;
-
-        public Tomograf(PictureBox sinogramPicture, PictureBox outputPicture)
-        {
-            this.sinogramPicture = sinogramPicture;
-            this.outputPicture = outputPicture;
-        }
 
         public void SetSettings(int[,] inpic, int steps, float l, int n)
         {
@@ -85,7 +77,7 @@ namespace tomograf
         {
             for (int i = 0; i < a.GetLength(0); i++)
                 for (int j = 0; j < a.GetLength(1); j++)
-                    a[i, j] = 0;
+                    a[i, j] = 50;
         }
 
         //Converts sinogram into output picture
@@ -99,9 +91,21 @@ namespace tomograf
             this.alfa = 0;
 
             int i = 0;
+
+            int d = 5;
+            while(Math.PI / step / d > 100)
+            {
+                d += 1;
+            }
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("pomiary.txt"))
+            {
+                file.WriteLine("Step;" + step.ToString() + ";l;" + l.ToString() + ";n;" + n.ToString());
+            }
+
             while (alfa < 2 * Math.PI)
             {
-                if(i%5 == 0)
+                if(i%d == 0)
                 {
                     outpics.Add((int[,]) outpic.Clone());
                 }
@@ -113,7 +117,6 @@ namespace tomograf
                     
                     Point det = GetDetectorPoint(j);
                     line.GenerateLine(emmiter, det);
-                    line.line.Reverse();
 
                     int val = 0;
                     foreach (Point pt in line.line)
@@ -125,7 +128,7 @@ namespace tomograf
                     foreach (Point pt in line.line)
                     {
                         int pix = outpic[pt.X, pt.Y];
-                        int diff = 2;
+                        int diff = 3;
                         if(sum > val)
                         {
                             pix += diff;
@@ -141,11 +144,17 @@ namespace tomograf
                         outpic[pt.X, pt.Y] = pix;
                     }
                 }
+
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter("pomiary.txt", true))
+                {
+                    file.WriteLine(alfa.ToString() + ';' + i.ToString() + ';' + CountMeanSquaredError(outpic).ToString());
+                } 
+
                 NextAlfa();
                 i++;
             }
             outpics.Add((int[,])outpic.Clone());
-            CountMeanSquaredError();
+            this.meanSquaredError = CountMeanSquaredError(outpics[outpics.Count-1]);
         }
 
         public void SinogramFilter(bool filteron)
@@ -181,7 +190,10 @@ namespace tomograf
 
                 for (int i = 0; i < filtredsinogram.GetLength(0); i++)
                     for (int j = 0; j < filtredsinogram.GetLength(1); j++)
-                        filtredsinogram[i, j] = Convert.ToInt32((arr[i, j] - min) / (max - min) * (arr[i, j] - min) / (max - min) * 255);
+                    {
+                        double a = (arr[i, j] - min) / (max - min);
+                        filtredsinogram[i, j] = Convert.ToInt32( Math.Pow(a,2)* 255);
+                    }
             }
             else
             {
@@ -252,19 +264,20 @@ namespace tomograf
             return Math.PI * angle / 180.0;
         }
 
-        private void CountMeanSquaredError()
+        private double CountMeanSquaredError(int[,] pic)
         {
-            meanSquaredError = 0;
-            int n = outpics.Count - 1;
+            double mSE = 0;
             for (int i = 0; i < inpic.GetLength(0); i++)
                 for (int j = 0; j < inpic.GetLength(1); j++)
                 {
                     if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r)
                     {
-                        int a = inpic[i, j] - outpics[n][i, j];
-                        meanSquaredError += a * a;
+                        int a = inpic[i, j] - pic[i, j];
+                        mSE += a * a;
                     }
                 }
+            mSE = Math.Sqrt(mSE / (inpic.GetLength(0) * inpic.GetLength(1)));
+            return mSE;
         }
     }
 }
