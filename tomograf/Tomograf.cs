@@ -26,7 +26,7 @@ namespace tomograf
         public int[,] filtredsinogram { get; private set; }
         public List<int[,]> outpics { get; private set; }
 
-
+        private int steps;
         public void SetSettings(int[,] inpic, int steps, float l, int n)
         {
             this.r = inpic.GetLength(0) / 2;
@@ -34,6 +34,7 @@ namespace tomograf
             this.step = DegreeToRadian(360.0/steps);
             this.l = DegreeToRadian(l);
             this.n = n;
+            this.steps = steps;
 
             this.inpic = inpic;
             this.sinogram = new int[n, steps + 1];
@@ -100,7 +101,7 @@ namespace tomograf
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter("pomiary.txt"))
             {
-                file.WriteLine("Step;" + step.ToString() + ";l;" + l.ToString() + ";n;" + n.ToString());
+                file.WriteLine("Steps;" + steps.ToString() + ";Step;" + step.ToString() + ";l;" + l.ToString() + ";n;" + n.ToString());
             }
 
             while (alfa < 2 * Math.PI)
@@ -266,6 +267,7 @@ namespace tomograf
 
         private double CountMeanSquaredError(int[,] pic)
         {
+            int k = 0;
             double mSE = 0;
             for (int i = 0; i < inpic.GetLength(0); i++)
                 for (int j = 0; j < inpic.GetLength(1); j++)
@@ -274,9 +276,10 @@ namespace tomograf
                     {
                         int a = inpic[i, j] - pic[i, j];
                         mSE += a * a;
+                        k++;
                     }
                 }
-            mSE = Math.Sqrt(mSE / (inpic.GetLength(0) * inpic.GetLength(1)));
+            mSE = Math.Sqrt(mSE / k);
             return mSE;
         }
     }
